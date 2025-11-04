@@ -1,16 +1,48 @@
-<?php
-namespace SurveyFlow\Admin;
+        if (!current_user_can('edit_posts')) {
+            wp_die(esc_html__('You do not have permission to view this page.', 'surveyflow'));
+        }
+        if ($survey_id && isset($_GET['sf_export']) && $_GET['sf_export'] === 'csv') {
+            $nonce = isset($_GET['sf_nonce']) ? sanitize_text_field(wp_unslash($_GET['sf_nonce'])) : '';
+            if (!wp_verify_nonce($nonce, 'sf_export_' . $survey_id)) {
+                wp_die(esc_html__('Invalid export nonce.', 'surveyflow'));
+            }
+            $this->export_csv($survey_id);
+            exit;
+        }
+            /* translators: %s: survey title. */
+            $heading = sprintf(__('Responses for: %s', 'surveyflow'), $title);
+            echo '<h1 class="wp-heading-inline">' . esc_html($heading) . '</h1>';
+            $table = \SurveyFlow\Core\Database::get_table_name();
+            $total = (int) $wpdb->get_var(
+                $wpdb->prepare("SELECT COUNT(*) FROM {$table} WHERE survey_id = %d", $survey_id)
+            );
+            /* translators: %s: number of survey responses. */
+            $total_text = sprintf(_n('%s total response', '%s total responses', $total, 'surveyflow'), number_format_i18n($total));
+            echo ' <span class="subtitle">' . esc_html($total_text) . '</span>';
+            foreach ($surveys as $sid) {
+                echo '<option value="' . esc_attr($sid) . '"';
+                if (selected($sid, $survey_id, false)) {
+                    echo ' selected="selected"';
+                }
+                echo '>' . esc_html(get_the_title($sid)) . '</option>';
+            }
+        $filename = 'surveyflow-responses-' . $title . '-' . gmdate('Ymd-His') . '.csv';
+        $out = fopen('php://output', 'w');
+        fputcsv($out, ['Time', 'User ID', 'IP', 'Answers JSON', 'Uploads JSON']);
 
-if (!defined('ABSPATH')) exit;
-
-class ResponsesPage {
-
-    public function render() {
-        if (!current_user_can('edit_posts')) {
-            wp_die(__('You do not have permission to view this page.', 'surveyflow'));
-        }
-
-        if (!class_exists('\SurveyFlow\Admin\ResponsesTable')) {
+        foreach ((array) $rows as $r) {
+            fputcsv($out, [
+                $r['created_at'] ?? '',
+                (int) ($r['user_id'] ?? 0),
+                $r['ip'] ?? '',
+                (string) ($r['answers_json'] ?? ''),
+                (string) ($r['uploads_json'] ?? ''),
+            ]);
+        }
+
+        exit;
+    }
+}
             require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
             require_once SURVEYFLOW_PATH . 'includes/Admin/ResponsesTable.php';
         }
