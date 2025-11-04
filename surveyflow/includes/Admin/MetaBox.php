@@ -1,5 +1,12 @@
-<?php
-namespace SurveyFlow\Admin;
+    if (!is_string($saved_json) || $saved_json === '') {
+      $saved_json = '[]';
+    }
+    $saved_array = json_decode($saved_json, true);
+    if (!is_array($saved_array)) {
+      $saved_array = [];
+    }
+    $builder_json = wp_json_encode($saved_array);
+
 
 if (!defined('ABSPATH')) exit;
 
@@ -65,9 +72,12 @@ class MetaBox {
 
             <label class="sf-row sf-row-title">
               <span class="sf-label"><?php esc_html_e('Question', 'surveyflow'); ?></span>
-              <input type="text" class="sf-title" value="">
-            </label>
-
+      <script>
+        // Preload saved questions for the builder to rehydrate.
+        // This is raw JSON (already validated server-side).
+        window.surveyflowSavedQuestions = <?php echo $builder_json; ?>;
+      </script>
+
             <div class="sf-options-wrap" style="display:none;">
               <div class="sf-options"></div>
               <button type="button" class="button sf-add-option"><?php esc_html_e('Add Option', 'surveyflow'); ?></button>
