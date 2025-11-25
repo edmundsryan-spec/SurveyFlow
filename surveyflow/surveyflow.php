@@ -42,4 +42,7 @@ add_action('plugins_loaded', function () {
     new \SurveyFlow\Core\Assets();
     new \SurveyFlow\Admin\Admin();
     new \SurveyFlow\Frontend\Frontend();
+        new \SurveyFlow\Admin\Blocks();
+
+    
 });

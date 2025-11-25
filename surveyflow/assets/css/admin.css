@@ -1,130 +1,308 @@
-#surveyflow-builder .surveyflow-questions { list-style:none; margin:0; padding:0; }
-#surveyflow-builder .surveyflow-question-item {
-  background:#fff; border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:10px;
-}
-#surveyflow-builder .dashicons-move { cursor:grab; }
-#surveyflow-builder .row { margin:8px 0; }
-#surveyflow-builder .sf-option { display:flex; gap:8px; align-items:center; margin:6px 0; }
-#surveyflow-builder .surveyflow-remove { font-size:18px; line-height:1; }
-.sf-toolbar { display:flex; gap:.5rem; align-items:center; position:sticky; top:32px; z-index:10; padding:.5rem .5rem .5rem 0; background:transparent; }
-.sf-toolbar .sf-toolbar-spacer { flex:1; }
-
-.sf-item { border:1px solid #e5e5e5; border-radius:8px; margin:10px 0; background:#fff; }
-.sf-item-head { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem; border-bottom:1px solid #eee; }
-.sf-handle { cursor:grab; }
-.sf-remove { margin-left:auto; background:none; border:0; font-size:18px; line-height:1; cursor:pointer; }
-
-.sf-item-body { padding:.75rem; }
-.sf-row { display:flex; gap:12px; align-items:center; margin:8px 0; }
-.sf-row .sf-label { min-width:140px; font-weight:600; }
-.sf-options .sf-option { display:flex; align-items:center; gap:8px; margin:6px 0; }
-.sf-opt-flag { font-size:12px; color:#555; }
-
-/* === SurveyFlow Builder Toolbar (Top Sticky) === */
-/* === SurveyFlow Builder Toolbar (Top Sticky, Admin Bar Safe) === */
-.surveyflow-toolbar {
-  position: sticky;
-  top: 32px; /* Default admin bar height */
-  background: #ffffff;
-  padding: 10px 12px;
-  border-bottom: 1px solid #dcdcde;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  z-index: 100;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-@media (max-width: 782px) {
-  .surveyflow-toolbar {
-    position: sticky;
-    top: 46px;
-    flex-direction: column;
-    align-items: stretch;
-    overflow: hidden;
-    max-height: 40px;
-    transition: max-height 0.25s ease, padding 0.25s ease;
-    padding: 4px 12px;
-  }
-
-  .surveyflow-toolbar.expanded {
-    max-height: 300px;
-    padding: 10px 12px;
-  }
-
-  .surveyflow-toolbar .button {
-    font-size: 13px;
-    height: 30px;
-    line-height: 28px;
-  }
-
-  .surveyflow-toolbar:not(.expanded) .button:not(:first-child) {
-    display: none;
-  }
-}
-.surveyflow-toolbar-toggle {
-  background: none;
-  border: none;
-  padding: 4px 8px;
-  margin-right: 6px; /* instead of margin-left */
-  cursor: pointer;
-  color: #555d66;
-  display: none; /* shown only on mobile */
-}
-
-.surveyflow-toolbar-toggle .dashicons {
-  font-size: 22px;
-  vertical-align: middle;
-  transition: transform 0.25s ease;
-}
-
-@media (max-width: 782px) {
-  .sf-toolbar-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* rotate icon when expanded */
-  .surveyflow-toolbar.expanded .sf-toolbar-toggle .dashicons {
-    transform: rotate(90deg);
-  }
-}
-
-/* Ensure toolbar sits flush under admin bar on all devices */
-@media (min-width: 783px) {
-  .surveyflow-toolbar {
-    top: 32px !important; /* default admin bar height on desktop */
-  }
-}
-
-@media (max-width: 782px) {
-  .surveyflow-toolbar {
-    top: 0 !important; /* flush with top of viewport on mobile */
-  }
-  
-}
-
-.sf-copy-shortcode {
-    cursor: pointer;
-    display: inline-block;
-    padding: 4px 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fafafa;
-    font-family: monospace;
-}
-
-.sf-copy-shortcode:hover {
-    background: #f0f0f0;
-}
-
-.sf-copy-icon {
-    opacity: 0.6;
-    margin-left: 4px;
-}
-
-.sf-copy-shortcode.sf-copied {
-    background: #dfffe0 !important;
-    border-color: #55bb55;
-}
+#surveyflow-builder .surveyflow-questions { list-style:none; margin:0; padding:0; }
+#surveyflow-builder .surveyflow-question-item {
+  background:#fff; border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:10px;
+}
+#surveyflow-builder .dashicons-move { cursor:grab; }
+#surveyflow-builder .row { margin:8px 0; }
+#surveyflow-builder .sf-option { display:flex; gap:8px; align-items:center; margin:6px 0; }
+#surveyflow-builder .surveyflow-remove { font-size:18px; line-height:1; }
+.sf-toolbar { display:flex; gap:.5rem; align-items:center; position:sticky; top:32px; z-index:10; padding:.5rem .5rem .5rem 0; background:transparent; }
+.sf-toolbar .sf-toolbar-spacer { flex:1; }
+.sf-toolbar-toggle {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  margin-right: 6px; /* instead of margin-left */
+  cursor: pointer;
+  color: #555d66;
+  display: none; /* shown only on mobile */
+}
+
+.sf-toolbar-toggle .dashicons {
+  font-size: 22px;
+  vertical-align: middle;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 782px) {
+  .sf-toolbar {
+    position: sticky;
+    top: 46px;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    max-height: 40px;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+    padding: 4px 12px;
+  }
+
+  .sf-toolbar.expanded {
+    max-height: 300px;
+    padding: 10px 12px;
+  }
+
+  .sf-toolbar .button {
+    font-size: 13px;
+    height: 30px;
+    line-height: 28px;
+  }
+
+  .sf-toolbar:not(.expanded) .button:not(:first-child) {
+    display: none;
+  }
+
+  .sf-toolbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* rotate icon when expanded */
+  .sf-toolbar.expanded .sf-toolbar-toggle .dashicons {
+    transform: rotate(90deg);
+  }
+}
+.sf-item { border:1px solid #e5e5e5; border-radius:8px; margin:10px 0; background:#fff; }
+.sf-item-head { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem; border-bottom:1px solid #eee; }
+.sf-handle { cursor:grab; }
+.sf-remove { margin-left:auto; background:none; border:0; font-size:18px; line-height:1; cursor:pointer; }
+
+.sf-item-body { padding:.75rem; }
+.sf-row { display:flex; gap:12px; align-items:center; margin:8px 0; }
+.sf-row .sf-label { min-width:140px; font-weight:600; }
+.sf-options .sf-option { display:flex; align-items:center; gap:8px; margin:6px 0; }
+.sf-opt-flag { font-size:12px; color:#555; }
+
+/* === SurveyFlow Builder Toolbar (Top Sticky) === */
+/* === SurveyFlow Builder Toolbar (Top Sticky, Admin Bar Safe) === */
+.surveyflow-toolbar {
+  position: sticky;
+  top: 32px; /* Default admin bar height */
+  background: #ffffff;
+  padding: 10px 12px;
+  border-bottom: 1px solid #dcdcde;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 782px) {
+  .surveyflow-toolbar {
+    position: sticky;
+    top: 46px;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    max-height: 40px;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+    padding: 4px 12px;
+  }
+
+  .surveyflow-toolbar.expanded {
+    max-height: 300px;
+    padding: 10px 12px;
+  }
+
+  .surveyflow-toolbar .button {
+    font-size: 13px;
+    height: 30px;
+    line-height: 28px;
+  }
+
+  .surveyflow-toolbar:not(.expanded) .button:not(:first-child) {
+    display: none;
+  }
+}
+.surveyflow-toolbar-toggle {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  margin-right: 6px; /* instead of margin-left */
+  cursor: pointer;
+  color: #555d66;
+  display: none; /* shown only on mobile */
+}
+
+.surveyflow-toolbar-toggle .dashicons {
+  font-size: 22px;
+  vertical-align: middle;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 782px) {
+  .sf-toolbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* rotate icon when expanded */
+  .surveyflow-toolbar.expanded .sf-toolbar-toggle .dashicons {
+    transform: rotate(90deg);
+  }
+}
+
+/* Ensure toolbar sits flush under admin bar on all devices */
+@media (min-width: 783px) {
+  .surveyflow-toolbar {
+    top: 32px !important; /* default admin bar height on desktop */
+  }
+}
+
+@media (max-width: 782px) {
+  .surveyflow-toolbar {
+    top: 0 !important; /* flush with top of viewport on mobile */
+  }
+  
+}
+
+.sf-copy-shortcode {
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fafafa;
+    font-family: monospace;
+}
+
+.sf-copy-shortcode:hover {
+    background: #f0f0f0;
+}
+
+.sf-copy-icon {
+    opacity: 0.6;
+    margin-left: 4px;
+}
+
+.sf-copy-shortcode.sf-copied {
+    background: #dfffe0 !important;
+    border-color: #55bb55;
+}
+/* === SurveyFlow Responses Screen === */
+
+.surveyflow-responses {
+  margin-top: 20px;
+}
+
+.sf-response-card {
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.sf-response-card h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.sf-response-meta {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #555d66;
+}
+
+.sf-response-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.4;
+  margin-left: 6px;
+}
+
+.sf-response-badge-disq {
+  background: #d63638;
+  color: #fff;
+}
+
+.sf-response-qa {
+  border-top: 1px solid #dcdcde;
+  padding-top: 10px;
+}
+
+.sf-response-section {
+  margin: 12px 0 4px;
+  font-size: 14px;
+}
+
+.sf-response-section-desc {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #555d66;
+}
+
+.sf-response-question {
+  margin-bottom: 10px;
+}
+
+.sf-q-label {
+  margin: 0 0 2px;
+}
+
+.sf-q-label strong {
+  font-weight: 600;
+}
+
+.sf-q-answer {
+  margin: 0 0 4px;
+  font-size: 13px;
+}
+
+/* Pagination */
+.surveyflow-responses + .tablenav {
+  margin-top: 10px;
+}
+/* === SurveyFlow Gutenberg Block (Editor) === */
+/* Wrapper for block preview in editor, alignment-aware */
+
+.surveyflow-block-preview-wrapper {
+  margin-top: 6px;
+}
+
+/* Max-width container in editor when align=wide */
+.surveyflow-block-preview-wrapper.sf-align-max {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Inner preview box with subtle background */
+.surveyflow-block-preview {
+  border: 1px solid #dce0e6;
+  background: #f8f9fb;
+  padding: 14px 16px;
+  border-radius: 6px;
+}
+
+.surveyflow-block-preview-title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.surveyflow-block-preview p {
+  margin: 0;
+  font-size: 13px;
+  color: #555d66;
+}
+
+.surveyflow-block-preview {
+  border: 1px dashed #dce0e6;
+  background: #f8f9fb; 
+  padding: 14px 16px;
+  border-radius: 6px;
+}
+
+.surveyflow-block-preview h2 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+
